@@ -1,0 +1,62 @@
+
+#mapper
+#!/usr/bin/env python 3
+
+  
+
+import sys 
+
+  
+
+def mapper(value): 
+
+    output = value.strip().split(',') 
+    steam_id = output[0] 
+    playtime = output[6] 
+
+  
+
+    try: 
+        playtime = float(playtime) 
+    except ValueError: 
+        return 
+
+    print("%s\t%s" % (steam_id, playtime)) 
+
+if_name_ == "_main_":
+    for line in sys.stdin: 
+    mapper(line)
+
+
+#Reducer
+#!/usr/bin/env python3 
+
+from operator import itemgetter
+import sys
+
+def reducer(steam_id, playtime):
+    total_playtime = sum(playtime)
+    num_playtime = len(playtime)
+    average_playtime = total_playtime / num_playtime
+    print("%s\t%s" % (steam_id, average_playtime))
+
+if _name_ == "_main_":
+    current_app_id = None
+    playtime = []
+
+    for line in sys.stdin:
+        steam_id, playtime = line.strip().split('\t')
+        playtime = float(playtime)
+
+        if current_steam_id is None:
+            current_steam_id = steam_id
+
+        if steam_id != current_steam_id:
+            reducer(current_steam_id, playtime)
+            playtime = []
+            current_steam_id = steam_id
+
+        playtime.append(playtime)
+
+    if current_steam_id is not None:
+        reducer(current_steam_id, playtime)
